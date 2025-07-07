@@ -1,14 +1,16 @@
 Admin
     login
-    accepter / refuser pret
+    accepter / refuser pret 
         Checking ampy ve le vola sa tsy ampy (volan banky)
+        Mise à jour du fond actuelle de la bank
     CRUD type_pret
         nom
         taux
         rendre (Afaka firy volana na taona le izy no tokony efa voalohany ilay vola)
         rendu_min
+        rendu_max
 Client
-    Login
+    Login / Inscription
     Demander pret (vola ilaina, type pret)
         checking 
             misy type_client sasany tsy afaka manao type_pret sasany
@@ -23,17 +25,4 @@ Client
     rendre pret
         afaka aloha en totalite na tsikelikely 
         afficher-na ny reste à payer raha mbola misyç
-    liste des pret nataony (voaloha / tsy voaloha)
-
-
-    pret
-
-    type_status
-        en attente
-        en cours
-        termine 
-        refuser
-
-    status_pret
-
-    
+    liste des pret nataony (voaloha / tsy voaloha / ...)
