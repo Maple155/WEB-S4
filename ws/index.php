@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 require 'db.php';
+require 'admin.php';
 
 Flight::route('GET /etudiants', function() {
     $db = getDB();

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin - Établissement Financier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .logo {
+            width: 80px;
+            margin-bottom: 1rem;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .success {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Remplacez par votre logo -->
+        <img src="https://via.placeholder.com/80" alt="Logo Banque" class="logo">
+        <h1>Espace Administrateur</h1>
+        
+        <form id="loginForm">
+            <input type="text" id="nom" placeholder="Nom de l'établissement" required>
+            <input type="password" id="mdp" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        
+        <div id="message" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nom = document.getElementById('nom').value;
+            const mdp = document.getElementById('mdp').value;
+            const messageEl = document.getElementById('message');
+            
+            // Réinitialiser le message
+            messageEl.textContent = '';
+            messageEl.classList.remove('success', 'error');
+            
+            // Envoyer les données au serveur
+            fetch('http://localhost/WEB-S4/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nom: nom,
+                    mdp: mdp
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Connexion réussie
+                messageEl.textContent = 'Connexion réussie! Redirection...';
+                messageEl.classList.add('success');
+                
+                // Stocker les infos admin (à sécuriser en production)
+                localStorage.setItem('adminToken', 'simple-auth-token');
+                localStorage.setItem('adminData', JSON.stringify(data.admin));
+                
+                // Redirection vers le dashboard après 1.5s
+                setTimeout(() => {
+                    window.location.href = 'admin_dashboard.html';
+                }, 1500);
+            })
+            .catch(error => {
+                messageEl.textContent = error.message || 'Erreur de connexion';
+                messageEl.classList.add('error');
+            });
+        });
+    </script>
+</body>
+</html>
