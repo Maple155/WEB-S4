@@ -24,10 +24,10 @@ Flight::route('POST /etudiants', function() {
 });
 
 Flight::route('PUT /etudiants/@id', function($id) {
-    $data = Flight::request()->data;
+    parse_str(file_get_contents('php://input'), $data);
     $db = getDB();
     $stmt = $db->prepare("UPDATE etudiant SET nom = ?, prenom = ?, email = ?, age = ? WHERE id = ?");
-    $stmt->execute([$data->nom, $data->prenom, $data->email, $data->age, $id]);
+    $stmt->execute([$data['nom'], $data['prenom'], $data['email'], $data['age'], $id]);
     Flight::json(['message' => 'Étudiant modifié']);
 });
 
