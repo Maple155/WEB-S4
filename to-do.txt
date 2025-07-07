@@ -8,7 +8,7 @@ Admin
         taux
         rendre (Afaka firy volana na taona le izy no tokony efa voalohany ilay vola)
         rendu_min
-        rendu_max
+        rendu_max 
 Client
     Login / Inscription
     Demander pret (vola ilaina, type pret)
